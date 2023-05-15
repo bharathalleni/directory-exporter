@@ -6,7 +6,7 @@ A Prometheus exporter to count the number of files in multiple directories and e
 
 ### Testing
 ```
-https://github.com/bharathalleni/directory-exporter.git
+git clone https://github.com/bharathalleni/directory-exporter.git
 cd directory-exporter
 pip install -r requirements.txt
 python3 main.py

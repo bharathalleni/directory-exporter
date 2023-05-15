@@ -40,9 +40,9 @@ if __name__ == '__main__':
         logging.info(f"Prometheus Exporter started at http://0.0.0.0:{port}")
 
         # Create Prometheus metrics
-        num_files = Gauge('file_count', 'Number of files in directory', ['path', 'server'])
-        ext_count = Gauge('file_count_by_extension', 'Count of files with extension', ['path', 'extension', 'server'])
-        empty_files = Gauge('empty_file_count', 'Number of empty files', ['path', 'server'])
+        num_files = Gauge('file_count', 'Number of files in directory', ['path', 'name', 'server'])
+        ext_count = Gauge('file_count_by_extension', 'Count of files with extension', ['path', 'name', 'extension', 'server'])
+        empty_files = Gauge('empty_file_count', 'Number of empty files', ['path', 'name', 'server'])
         server_ip = socket.gethostbyname(socket.gethostname())
         
         while (True):
@@ -50,13 +50,14 @@ if __name__ == '__main__':
             for monitor in config['monitors']:
                 # print(monitor)
                 dir_path = monitor.get("directory_path")
+                dir_name = monitor.get("directory_name")
                 ext_list = monitor.get("extensions_to_watch")
                 try:
                     file_count, ext_count_dict, empty_file_count = count_files_in_dir(dir_path, ext_list)
-                    num_files.labels(path=dir_path, server=server_ip).set(file_count)
-                    empty_files.labels(path=dir_path, server=server_ip).set(empty_file_count)
+                    num_files.labels(path=dir_path, name=dir_name, server=server_ip).set(file_count)
+                    empty_files.labels(path=dir_path, name=dir_name, server=server_ip).set(empty_file_count)
                     for ext, count in ext_count_dict.items():
-                        ext_count.labels(path=dir_path, extension=ext, server=server_ip).set(count)
+                        ext_count.labels(path=dir_path, name=dir_name, extension=ext, server=server_ip).set(count)
                 except Exception as e:
                     logging.error(f"Error occurred while processing directory {dir_path}: {e}")
             time.sleep(config.get('update_interval_seconds'))

@@ -22,7 +22,7 @@ def count_files_in_dir(dir_path, ext_list):
                     ext_count_dict[ext] = 0
                 ext_count_dict[ext] += 1
 
-    empty_files = [f for f in os.scandir(dir_path) if os.stat(os.path.join(dir_path, f)).st_size == 0]
+    empty_files = [f for f in os.scandir(dir_path) if os.stat(os.path.join(dir_path, f)).st_size == 0 and os.path.isfile(f)]
     empty_file_count = len(empty_files)
 
     return file_count, ext_count_dict, empty_file_count

@@ -9,14 +9,14 @@ A Prometheus exporter to count the number of files in multiple directories and e
 git clone https://github.com/bharathalleni/directory-exporter.git
 cd directory-exporter
 pip install -r requirements.txt
-python3 main.py
+python3 prom-file-count-exporter.py
 ```
-The script will start monitoring the specified directories in the configuration file and expose the Prometheus metric at `http://localhost:9028/metrics`.
+The script will start monitoring the specified directories in the configuration file (`config.yaml`) and expose the Prometheus metric at `http://localhost:9028/metrics`.
 
 ### Build for Windows, Linux and MacOS
 ```
 pip3 install pyinstaller
-pyinstaller --onefile ./main.py
+pyinstaller --onefile ./prom-file-count-exporter.py
 ```
 The installer will be created in ``dist`` directory. You can install it as a Windows service using [NSSM](https://nssm.cc/) or run it as a service using systemd in Linux.
 

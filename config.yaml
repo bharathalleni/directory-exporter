@@ -1,17 +1,22 @@
 version: 1.0
 listen_port: 9028
+log_to_file: true
+log_filename: file_exporter.log
+log_to_stdout: true
 debug: false
 update_interval_seconds: 20
 
 monitors:
   - directory_name: FILE_EXPORTER
     directory_path: /Users/Username/data/file-count-exporter/
+    recurse: true
     extensions_to_watch:
       - ".txt"
       - ".py"
       - ".xml"
   - directory_name: DOWNLOADS
     directory_path: /Users/Username/data
+    recurse: false
     extensions_to_watch:
       - ".txt"
       - ".exe"
